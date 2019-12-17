@@ -17,12 +17,12 @@ def teste(request):
     client = ApiClient(endpoint=endpoint)
     accessor = GraphDBApi(client)
 
-    query = """ PREFIX : <http://www.semwebtech.org/mondial/10/meta#>
-                select ?country ?value ?name where { 
-                    ?country :population ?value.
+    query = """ PREFIX : <http://countries.org/edc#/>
+                PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                select ?value ?name where { 
+                    ?country :pop ?value.
                     ?country :name ?name.
-                    ?country rdf:type :Country.
-                } order by desc(?value) limit 20
+                } order by desc(xsd:integer(?value)) limit 20
 """
 
     payload_query = {"query": query}
@@ -35,5 +35,5 @@ def teste(request):
 
     
     return render(request, 'teste.html', {'data': json.dumps(pop),
-                                            'title': "Top 20 Populations"})
+                                            'title': "Top 20 Populations (in Millions)"})
     
