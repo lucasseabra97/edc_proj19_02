@@ -1,7 +1,7 @@
 .sidebar {
     position: relative;
     height: 100%;
-    width: 28rem;
+    width: 20rem;
     background-color: #2b3145;
     box-shadow: 3px 3px 20px 1px #2b3145;
     z-index: 2;
