@@ -19,5 +19,6 @@ from app import views
 
 urlpatterns = [
     path('', views.landing, name="landing"),
+    path('teste', views.teste, name="teste"),
     path('admin/', admin.site.urls),
 ]

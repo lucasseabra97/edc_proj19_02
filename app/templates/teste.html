@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<span id="dataSpan" style="display: none">{{data}}</span>
+<span id="titleSpan" style="display: none">{{title}}</span>
+<p><button id="bar">Bar</button><button id="pie">Pie</button></p>
+<div style="position: relative; height:400px; width:400px">
+        <canvas id="chart"></canvas>
+</div>
+
+<script src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+<script src='{% static "js/teste-chart.js" %}'></script>
+
+{% endblock %}
