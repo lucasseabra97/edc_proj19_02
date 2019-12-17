@@ -122,3 +122,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 ROOT_URL = os.path.join(BASE_DIR, '')
 STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
+
+OPTIONAL { ?country wdt:P41 ?flag };
+OPTIONAL { ?country wdt:P395 ?plate };
+OPTIONAL { ?country wdt:P421 ?localtime };
+OPTIONAL { ?country wdt:P1082 ?pop };
+OPTIONAL { ?country wdt:P242 ?location };
+OPTIONAL { ?country wdt:P2573 ?outschool };
+OPTIONAL { ?country wdt:P1279 ?inflation };
+OPTIONAL { ?country wdt:P2046 ?area };
+OPTIONAL { ?country wdt:P38 ?currency };
+OPTIONAL { ?country wdt:P2219 ?pib };
+OPTIONAL { ?country wdt:P36 ?capital }
+           } .
