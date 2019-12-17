@@ -1,0 +1,66 @@
+.sidebar {
+    position: relative;
+    height: 100%;
+    width: 28rem;
+    background-color: #2b3145;
+    box-shadow: 3px 3px 20px 1px #2b3145;
+    z-index: 2;
+    flex-shrink: 0;
+    overflow: auto;
+    height: calc(100%);
+}
+.sidebar__item {
+    overflow: hidden;
+}
+.sidebar__item:hover {
+    background-color: rgb(195, 113, 54);
+}
+.sidebar__item.selected {
+    background-color: #202020;
+    border-bottom: 2px solid rgb(195, 113, 54);
+}
+.sidebar__item__header {
+    min-width: 100%;
+    transition: background-color .25s ease;
+    padding: 1.5rem 2rem;
+    color: white;
+    font-size: 2rem;
+    justify-content: space-between;
+    font-weight: bold;
+    cursor: pointer;
+}
+.sidebar__item__header > .arrow {
+    transition: transform .25s ease;
+    transform: rotate(-90deg) scaleY(1.75);
+    font-size: 2.25rem;
+}
+.sidebar__item:hover .arrow {
+    transform: rotate(-270deg) scaleY(1.75);
+}
+
+.sidebar__item__content {
+    transition: height .4s ease;
+    width: 100%;
+    background-color: #8d96af;
+    height: 0;
+}
+.sidebar__item__content > div > div {
+    transition: background-color .2s ease, color .2s ease;
+    width: 100%;
+    height: 3.25rem;
+    padding: .25rem .75rem;
+    cursor: pointer;
+    font-weight: 700;
+}
+.sidebar__item__content > div > div:hover {
+    background-color: #202020;
+    color: white;
+}
+.sidebar__item__content > div > div.selected {
+    background-color: #2b3145;
+    color:white;
+    border-bottom: 2px solid rgb(195, 113, 54);
+}
+.sidebar__item__content > div > :last-child:not(:first-child) {
+    display: none;
+}

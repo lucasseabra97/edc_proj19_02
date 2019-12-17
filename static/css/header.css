@@ -1,0 +1,81 @@
+.header {
+    position: relative;
+    width: 100vw;
+    height: 10rem;
+    background-color: #202020;
+    padding: 1.25rem 2rem;
+    box-shadow: 3px 3px 20px 1px #2b3145;
+    z-index: 1;
+}
+
+.header > a.action > img {
+    width: auto;
+    cursor: pointer;
+    height: 6rem;
+}
+.header > a.action > img:hover {
+    transform: scale(1.05);
+}
+.header > a.action:not(:last-of-type) {
+    margin-right: 2rem;
+}
+
+.header__logo {
+    min-width: 24rem;
+    max-width: 24rem;
+    transition: background-color .4s ease;
+    height: 100%;
+    margin-right: auto;
+    padding: 1.5rem;
+    background-color: #2b3145;
+    border: 3px solid rgb(255, 251, 253);
+    border-radius: 1.5rem;
+    cursor: pointer;
+    color: white;
+
+    justify-content: space-between;
+}
+.header__logo img {
+    transition: filter .25s ease;
+    height: 100%;
+    margin-right: .75rem;
+    filter: invert(1);
+}
+.header__logo img {
+    transition: filter .25s ease;
+    height: 100%;
+    margin-right: .75rem;
+    filter: invert(1);
+}
+.header__logo span {
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+}
+.header__logo:hover {
+    background-color: rgb(195, 113, 54);
+}
+.header__logo:active {
+    transition: background-color .1s ease;;
+    background-color: #2b3145;
+}
+
+.header__search {
+    position: relative;
+    margin-left: 5rem;
+    margin-right: 3rem;
+    width: 100%;
+    overflow: hidden;
+}
+.header__search > img {
+    transition: transform .33s ease;
+    cursor: pointer;
+    position: absolute;
+    height: 100%;
+    transform: scale(1.5) translateX(65%);
+    right: 0;
+}
+.header__search > img.show {
+    transition: transform .33s ease;
+    transform: scale(1.5);
+}

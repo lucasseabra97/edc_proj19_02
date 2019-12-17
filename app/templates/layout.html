@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EDC</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Add additional CSS in static file -->
+    {% load staticfiles %}
+    <link rel="stylesheet" href='{% static "css/global.css" %}'/>
+    <link rel="stylesheet" href='{% static "css/header.css" %}'/>
+    <link rel="stylesheet" href='{% static "css/sidebar.css" %}'/>
+    <link rel="stylesheet" href='{% static "css/index.css" %}'/>
+</head>
+<body>
+    <div class="header flex-center">
+        <!-- <a href="/music" class="header__logo flex-center">
+            <img src="{% static 'logo.svg' %}" alt="">
+            <span>Listen to your favourite musics</span>
+        </a> -->
+        <div class="header__search">
+            <input class="search" id="headerSearch" placeholder="Pesquise por nomes de músicas, artistas, e álbuns" type="text">
+            <img id="headerSearchImg" src="{% static 'search.png' %}"  alt="">
+        </div>
+        <!-- <a class="action" href="http://localhost:8000/playlists" style="filter: invert(1)">
+            <img src="{% static 'playlist.png' %}" alt="">
+        </a>
+        <a class="action" href="http://localhost:8000/pitchforkfeed">
+            <img src="{% static 'feed.svg' %}" alt="">
+        </a>
+        <a class="action" href="http://localhost:8000/" id="logout">
+            <img src="{% static 'logout.png' %}" alt="">
+        </a> -->
+    </div>
+    <div class="content flex-center">
+        <div class="sidebar">
+            <!-- {% for genre in genres %}
+                <div class="sidebar__item flex-center-column">
+                    <div class="sidebar__item__header flex-center">
+                        <span>{{ genre }}</span>
+                        <span class="arrow">&#60</span>
+                    </div>
+                    <div class="sidebar__item__content">
+
+                    </div>
+                </div>
+            {% endfor %} -->
+        </div>
+        <div class="content--wrapper">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+<script src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+<script src='{% static "js/index.js" %}'></script>
+<script src='{% static "js/navbar.js" %}'></script>
+<script src='{% static "js/sidebar.js" %}'></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+</html>

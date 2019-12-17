@@ -1,0 +1,252 @@
+.main_display {
+    width: 100%;
+}
+.main_display > span{
+    font-size: 2.5rem;
+    margin-bottom: .75rem;
+    display: block;
+    color: #2b3145;
+    text-transform: uppercase;
+}
+
+.main_display__artists {
+    margin-bottom: 1rem;
+    max-height: 30;
+    overflow-x: auto;
+    display: flex;
+}
+
+.main_display__artists--artist {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    margin-right: 2rem;
+    border-radius: 1rem;
+    padding: .5rem;
+    transition: background-color .2s ease;
+    background-color: #2b3145;
+}
+
+.main_display__videos {
+    max-width: 100%;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    max-height: 70rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main_display__videos--video {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    margin-right: 2rem;
+    border-radius: 1rem;
+}
+
+.youtube {
+    min-width: 17rem;
+    max-width: 17rem;
+    transition: background-color .2s ease;
+    background-color: #2b3145;
+    padding: .5rem 1rem;
+    border: 2px solid #2b3145;
+}
+
+.youtube.selected {
+    pointer-events: none;
+    background-color: rgb(195, 113, 54);
+}
+.youtube.selected > .youtube--title > :first-child {
+    color: white
+}
+
+.youtube--content {
+    width: 100%;
+    height: 14.5rem;
+    max-height: 14.5rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.youtube > span {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+}
+
+.youtube--content.small {
+    width: 5rem;
+    height: 5rem;
+}
+
+.youtube--title {
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.youtube--title > span{
+    font-size: 1.4rem;
+    color: white;
+}
+.youtube--title--add {
+    position: absolute;
+    top: 0;
+    right: -.5rem;
+    font-size: 2rem;
+    padding: 0 .2rem;
+    border: 1px solid white;
+    border-radius: .25rem;
+    background-color: rgb(195, 113, 54);
+    transition: background-color .2s ease;
+}
+.youtube--title--add:hover {
+    background-color: #2b3145;
+}
+.youtube--title > span.main-title {
+    max-width: 80%;
+    text-align: center;
+    transition: color .2s ease;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: rgb(195, 113, 54);
+    margin-bottom: .25rem;
+}
+
+.youtube--content img, img.youtube--content  {
+    border: 2px solid #2b3145;
+    border-radius: 2rem;
+    width: 100%;
+    height: 100%;
+}
+
+.youtube--content.small img {
+    border: 2px solid rgb(195, 113, 54);
+    border-radius: .5rem;
+}
+
+.youtube--content img.default {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.youtube--multi {
+    width: 100%;
+    height: 16rem;
+    position: relative;
+    margin-top: auto;
+} 
+.youtube--multi > div {
+    position: absolute;
+    width: 80%;
+    min-height: 12rem;
+    height: 12rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+.youtube--multi > div:nth-child(2) {
+    left: 0;
+    bottom: 0;
+    transform: none;
+    z-index: 3;
+}
+.youtube--multi > div:nth-child(3) {
+    left: 20%;
+    top: 0;
+    transform: none;
+    z-index: 1;
+}
+.youtube--multi > div:not(:first-child) > span {
+    display: none;
+}
+
+.info {
+    width: 100%;
+    padding: 0 .5rem;
+    margin-top: .5rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+.info--data:first-of-type {
+    margin-right: auto;
+}
+.info--data:last-of-type {
+    margin-left: auto;
+}
+.info--data {
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+}
+.info--data > img{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: .25rem;
+}
+.info--data:first-child > img{
+    filter: brightness(10);
+}
+.info--data--img {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: .5rem;
+    height: max-content;
+    background-color: #3b3b3b;
+    border-radius: 50%;
+    margin-right: .25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color .2s ease;
+}
+.info--data--img > img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    filter: invert(1);
+}
+.info--data--img:first-child:hover {
+    background-color: darkblue;
+}
+.info--data--img:first-child.selected {
+    background-color: blue;
+    pointer-events: none;
+}
+.info--data:last-child img {
+    transform: rotate(180deg);
+}
+.info--data:last-child:hover > div {
+    background-color: darkred;
+}
+
+.info--data:last-child > div.selected {
+    background-color: red;
+    pointer-events: none;
+}
+
+.info--data.disabled {
+    pointer-events: none;
+}
+.youtube:hover {
+    background-color: rgb(195, 113, 54);
+}
+.youtube:hover > .youtube--title > span:first-child {
+    color: white;
+}
