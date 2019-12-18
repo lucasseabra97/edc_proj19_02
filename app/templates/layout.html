@@ -10,6 +10,7 @@
     <link rel="stylesheet" href='{% static "css/header.css" %}'/>
     <link rel="stylesheet" href='{% static "css/sidebar.css" %}'/>
     <link rel="stylesheet" href='{% static "css/index.css" %}'/>
+    <link rel="stylesheet" href='{% static "css/country.css" %}'/>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -36,26 +37,58 @@
     </div>
     <div class="content flex-center">
         <div class="sidebar">
-            <!-- {% for genre in genres %}
-                <div class="sidebar__item flex-center-column">
-                    <div class="sidebar__item__header flex-center">
-                        <span>{{ genre }}</span>
-                        <span class="arrow">&#60</span>
-                    </div>
-                    <div class="sidebar__item__content">
-
-                    </div>
+            <div class="sidebar__item flex-center-column" id="pib">
+                <div class="sidebar__item__header flex-center">
+                    <span>PIB</span>
+                    <!-- <span class="arrow">&#60</span> -->
                 </div>
-            {% endfor %} -->
+                <div class="sidebar__item__content">
+
+                </div>
+            </div>
+
+            <div class="sidebar__item flex-center-column" id="area">
+                <div class="sidebar__item__header flex-center">
+                    <span>AREA</span>
+                    <!-- <span class="arrow">&#60</span> -->
+                </div>
+                <div class="sidebar__item__content">
+
+                </div>
+            </div>
+
+            <div class="sidebar__item flex-center-column" id="populacao">
+                <div class="sidebar__item__header flex-center">
+                    <span>POPULACAO</span>
+                    <!-- <span class="arrow">&#60</span> -->
+                </div>
+                <div class="sidebar__item__content">
+
+                </div>
+            </div>
+
+            <div class="sidebar__item flex-center-column" id="inflacao">
+                <div class="sidebar__item__header flex-center">
+                    <span>INFLACAO</span>
+                    <!-- <span class="arrow">&#60</span> -->
+                </div>
+                <div class="sidebar__item__content">
+
+                </div>
+            </div>
         </div>
         <div class="content--wrapper">
             {% block content %}{% endblock %}
         </div>
     </div>
 </body>
-<!-- <script src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+
+<script src='{% static "js/landing.js" %}'></script>
+<!-- 
 <script src='{% static "js/index.js" %}'></script>
 <script src='{% static "js/navbar.js" %}'></script>
 <script src='{% static "js/sidebar.js" %}'></script> -->
+<script src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+<script src='{% static "js/teste-chart.js" %}'></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 </html>

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="list" xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/" about="http://edc_2019.org/" typeof="edc:Country"> 
+        <div class="list__country title">
+            <div></div>
+            <span>Código</span>
+            <span>Nome</span>
+            <span>POPULACAO</span>
+        </div>
+        {% for c in tmp %}
+        <div class="list__country" >  
+            <img src={{c.flag}} alt="">
+            <span>{{c.plate}}</span>
+            <span>{{c.name}}</span>
+            <span>{{c.populacao}}</span>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

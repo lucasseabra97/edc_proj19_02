@@ -40,3 +40,9 @@
     height: 100%;
     padding: 1rem 1rem;
 }
+
+.list__link {
+    display: block;
+    text-decoration: none;
+    color: black;
+}

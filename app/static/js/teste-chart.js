@@ -1,7 +1,8 @@
 //Get data from page
 var dataSpan = document.getElementById("dataSpan").innerHTML;
+console.log(dataSpan)
 dataSpan = JSON.parse(dataSpan);
-
+console.log(dataSpan)
 var title = document.getElementById("titleSpan").innerHTML;
 
 var myChart;

@@ -14,15 +14,17 @@
             <span>PIB</span>
         </div>
         {% for c in tmp %}
-        <div class="list__country">
-            <img src={{c.flag}} alt="">
-            <span>{{c.plate}}</span>
-            <span>{{c.name}}</span>
-            <span>{{c.pop}}</span>
-            <span>{{c.area}}</span>
-            <span>{{c.inflation}}</span>
-            <span>{{c.currency}}</span>
-            <span>{{c.pib}}</span>
+        <div class="list__item">
+            <div class="list__country" >  
+                <img src={{c.flag}} alt="">
+                <span>{{c.plate}}</span>
+                <span>{{c.name}}</span>
+                <span>{{c.pop}}</span>
+                <span>{{c.area}}</span>
+                <span>{{c.inflation}}</span>
+                <span>{{c.currency}}</span>
+                <span>{{c.pib}}</span>
+            </div>
         </div>
         {% endfor %}
     </div>

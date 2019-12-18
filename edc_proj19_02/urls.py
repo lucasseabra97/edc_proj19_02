@@ -20,5 +20,10 @@ from app import views
 urlpatterns = [
     path('', views.landing, name="landing"),
     path('teste', views.teste, name="teste"),
+    path('country', views.country, name="country"),
+    path('pib', views.pib, name="pib"),
+    path('area', views.area, name="area"),
+    path('populacao', views.populacao, name="populacao"),
+    path('inflacao', views.inflacao, name="inflacao"),
     path('admin/', admin.site.urls),
 ]
