@@ -1,19 +1,18 @@
 //Get data from page
 var dataSpan = document.getElementById("dataSpan").innerHTML;
-console.log(dataSpan)
 dataSpan = JSON.parse(dataSpan);
-console.log(dataSpan)
 var title = document.getElementById("titleSpan").innerHTML;
+var type = document.getElementById("typeSpan").innerHTML;
 
 var myChart;
 var ctx = document.getElementById("chart");
 //Default chart config
 var config = {
-    type: 'bar',
+    type: type,
     data: {
-        labels: Object.keys(dataSpan).slice(0,20),
+        labels: Object.keys(dataSpan).slice(dataSpan.length-20),
         datasets: [{
-            data: Object.values(dataSpan).slice(0,20),
+            data: Object.values(dataSpan).slice(dataSpan.length-20),
             backgroundColor: [
                 // 'rgba(255, 99, 132, 0.2)',
                 // 'rgba(54, 162, 235, 0.2)',

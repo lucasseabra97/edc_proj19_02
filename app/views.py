@@ -50,7 +50,6 @@ def landing(request):
 
 def country(request):
     name = request.GET.get('name')
-    print(name)
 
     query = """PREFIX country:<http://edc_2019.org/country/>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -79,8 +78,27 @@ def country(request):
         **countries[x]
     },list(countries)))
 
+    url = 'https://query.wikidata.org/sparql'
+    wiki_query = """SELECT *
+                    WHERE
+                    {
+                    wd:""" + tmp[0]['id'] + """ p:P1279 ?p .
+                    ?p pq:P585 ?year ;
+                        ps:P1279 ?var .
+                    }order by ?year"""
+    print(tmp[0]['id'])
+    r = requests.get(url, params = {'format': 'json', 'query': wiki_query})
+    data = r.json()['results']['bindings']
+    chartData = {}
+    for d in data:
+        chartData[d['year']['value']] = d['var']['value']
+
+    print(chartData)
     return render(request, 'country.html',  {
-        'tmp': tmp[0]
+        'tmp': tmp[0],
+        'title': 'INFLATION EVOLUTION',
+        'type': 'line',
+        'data' : json.dumps(chartData)
     })
 
 
@@ -106,7 +124,8 @@ def pib(request):
     return render(request, 'pib.html',  {
         'tmp': tmp,
         'data': json.dumps(chartData),
-        'title': 'PIB'
+        'title': 'PIB',
+        'type': 'bar'
     })
 
 def area(request):
