@@ -6,4 +6,12 @@
         <img src="{{tmp.flag}}" alt="">
         {{tmp}}
     </div>
+
+    <span id="dataSpan" style="display: none">{{data}}</span>
+    <span id="titleSpan" style="display: none">{{title}}</span>
+    <span id="typeSpan" style="display: none">{{type}}</span>
+    <p><button id="bar">Bar</button><button id="pie">Pie</button></p>
+    <div style="position: relative; max-height:500px; width:1000px">
+            <canvas id="chart"></canvas>
+    </div>
 {% endblock %}
