@@ -1,0 +1,55 @@
+function createChart(chart, ctx, type, labels, data, title){
+    var config = {type: type,
+    data: {
+        labels: labels,
+        datasets: [{
+            data: data,
+            backgroundColor: [
+            ],
+            borderColor: [
+                'rgba(0,0,0,1)'
+            ],
+            borderWidth: 1,
+            fill: false
+        }]
+    },
+    options: {
+        legend: {
+            display: false,
+        },
+        title: {
+            display: true,
+            text: title
+        },
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true   // minimum value will be 0.
+                }
+            }]
+        }
+    }}
+    var chart = new Chart(ctx, config);
+    chart.responsive = true;
+}
+console.log('va'    )
+var dataSpan_infla = document.getElementById("dataSpan_infla").innerHTML;
+dataSpan_infla = JSON.parse(dataSpan_infla);
+var title_infla = document.getElementById("titleSpan_infla").innerHTML;
+var type_infla = document.getElementById("typeSpan_infla").innerHTML;
+
+var myChart_infla;
+var ctx_infla = document.getElementById("chart_infla");
+
+createChart(myChart_infla, ctx_infla, type_infla, Object.keys(dataSpan_infla), Object.values(dataSpan_infla), title_infla)
+
+var dataSpan_pop = document.getElementById("dataSpan_pop").innerHTML;
+dataSpan_pop = JSON.parse(dataSpan_pop);
+var title_pop = document.getElementById("titleSpan_pop").innerHTML;
+var type_pop = document.getElementById("typeSpan_pop").innerHTML;
+
+var myChart_pop;
+var ctx_pop = document.getElementById("chart_pop");
+
+createChart(myChart_pop, ctx_pop, type_pop, Object.keys(dataSpan_pop), Object.values(dataSpan_pop), title_pop)

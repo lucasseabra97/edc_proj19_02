@@ -7,11 +7,18 @@
         {{tmp}}
     </div>
 
-    <span id="dataSpan" style="display: none">{{data}}</span>
-    <span id="titleSpan" style="display: none">{{title}}</span>
-    <span id="typeSpan" style="display: none">{{type}}</span>
-    <p><button id="bar">Bar</button><button id="pie">Pie</button></p>
+    <span id="dataSpan_infla" style="display: none">{{data_infla}}</span>
+    <span id="titleSpan_infla" style="display: none">{{title_infla}}</span>
+    <span id="typeSpan_infla" style="display: none">{{type_infla}}</span>
     <div style="position: relative; max-height:500px; width:1000px">
-            <canvas id="chart"></canvas>
+            <canvas id="chart_infla" class="country__chart"></canvas>
     </div>
+
+    <span id="dataSpan_pop" style="display: none">{{data_pop}}</span>
+    <span id="titleSpan_pop" style="display: none">{{title_pop}}</span>
+    <span id="typeSpan_pop" style="display: none">{{type_pop}}</span>
+    <div style="position: relative; max-height:500px; width:1000px">
+            <canvas id="chart_pop" class="country__chart"></canvas>
+    </div>
+
 {% endblock %}

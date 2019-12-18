@@ -6,28 +6,16 @@ var type = document.getElementById("typeSpan").innerHTML;
 
 var myChart;
 var ctx = document.getElementById("chart");
-//Default chart config
+
 var config = {
-    type: type,
+    type: 'bar',
     data: {
-        labels: Object.keys(dataSpan).slice(dataSpan.length-20),
+        labels: Object.keys(dataSpan).slice(0,20),
         datasets: [{
-            data: Object.values(dataSpan).slice(dataSpan.length-20),
+            data: Object.values(dataSpan).slice(0,20),
             backgroundColor: [
-                // 'rgba(255, 99, 132, 0.2)',
-                // 'rgba(54, 162, 235, 0.2)',
-                // 'rgba(255, 206, 86, 0.2)',
-                // 'rgba(75, 192, 192, 0.2)',
-                // 'rgba(153, 102, 255, 0.2)',
-                // 'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
-                // 'rgba(255,99,132,1)',
-                // 'rgba(54, 162, 235, 1)',
-                // 'rgba(255, 206, 86, 1)',
-                // 'rgba(75, 192, 192, 1)',
-                // 'rgba(153, 102, 255, 1)',
-                // 'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -47,6 +35,7 @@ var config = {
         }
     }
 }
+
 //Create default chart
 var myChart = new Chart(ctx, config);
 myChart.responsive = true;
@@ -59,7 +48,7 @@ function changeChart(newType) {
     // Chart.js modifies the object you pass in. Pass a copy of the object so we can use the original object later
     var temp = jQuery.extend(true, {}, config);
     temp.type = newType;
-    if(newType != "bar"){
+    if(newType == "pie"){
         temp.options = {
             title: {
                 display: true,

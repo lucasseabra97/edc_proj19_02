@@ -7,3 +7,10 @@
     position: relative;
 }
 
+.country__chart {
+    background-color: lightgray;
+    margin: 10px;
+    padding: 10px;
+    border-radius: .5rem;
+}
+
