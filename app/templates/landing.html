@@ -2,31 +2,45 @@
 
 {% block content %}
 
-    <div class="list" xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/" about="http://edc_2019.org/" typeof="edc:Country"> 
-        <div class="list__country title">
-            <div></div>
-            <span>Código</span>
-            <span>Nome</span>
-            <span>População</span>
-            <span>Área</span>
-            <span>Inflação</span>
-            <span>Moeda</span>
-            <span>PIB</span>
-        </div>
-        {% for c in tmp %}
-        <div class="list__item">
+    <div>
+        <div class="list" xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/" about="http://edc_2019.org/" typeof="edc:Country"> 
+            <div class="list__country title">
+                <span></span>
+                {% for c in table_order %}
+                    <span>{{c}}</span>
+                {% endfor %}
+            </div>
+            {% for c in countries %}
             <div class="list__country" >  
-                <img src={{c.flag}} alt="">
-                <span>{{c.plate}}</span>
-                <span>{{c.name}}</span>
-                <span>{{c.pop}}</span>
-                <span>{{c.area}}</span>
-                <span>{{c.inflation}}</span>
-                <span>{{c.currency}}</span>
-                <span>{{c.pib}}</span>
+                <img src={{c.flag.value}} alt="">
+                {% for k in table_order %} 
+                    <span class={{k}}>{{ c|dict_value:k }}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="list__bottom">
+            <div class="paginator">
+                {% if showMin %}
+                    <div class="paginator--page">{{1}}</div>
+                    <span>...</span>
+                {% endif %}
+                {% for l in left %}
+                    <div class="paginator--page">{{l}}</div>
+                {% endfor %}
+                <span>{{page}}</span>
+                {% for r in right %}
+                    <div class="paginator--page">{{r}}</div>
+                {% endfor %}
+                {% if showMax %}
+                    <span>...</span>
+                    <div class="paginator--page">{{maxPage}}</div>
+                {% endif %}
+            </div>
+            <div class="results">
+                Está a ver {{limit}} dos {{size}} resultados de países
             </div>
         </div>
-        {% endfor %}
     </div>
 
 {% endblock %}

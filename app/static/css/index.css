@@ -3,23 +3,34 @@
     flex-direction: column;
     border-radius: 1rem;
     overflow: hidden;
+    border: 2px solid black;
 }
 .list__country {
+    height: 3rem;
     display: grid;
-    grid-template-columns: 5rem 10rem minmax(10rem, .6fr) minmax(12rem, .25fr) minmax(10rem, .2fr) minmax(8rem, .2fr) minmax(8rem, .2fr) minmax(6rem, .1fr);
+    grid-template-columns: 5rem 10rem minmax(10rem, .4fr) minmax(8rem, .2fr) minmax(12rem, .25fr) minmax(10rem, .2fr) minmax(7rem, .15fr) minmax(7rem, .15fr);
     align-items: center;
-    background-color: rgb(224, 224, 224);
+    background-color: rgb(188, 193, 212);
     padding-left: 1rem;
 }
 .list__country:nth-child(even) {
     background-color: white;
 }
 .list__country:hover {
-    cursor: pointer;
     color: white;
-    background-color: rgb(39, 70, 247);
+    background-color: rgb(106, 127, 250);
+}
+.list__country:not(.title):hover {
+    cursor: pointer;
+}
+.list__country:not(.title) > :not(:first-child) {
+    border-left: 1px solid rgb(120,120,120);
+}
+.list__country:not(:last-child):not(:first-child) {
+    border-bottom: 1px solid rgb(120,120,120);
 }
 .list__country > span {
+    font-weight: 700;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -30,7 +41,7 @@
     height: 2.5rem;
 }
 .list__country.title {
-    background-color: black;
+    background-color: rgb(53, 53, 53);
     text-transform: uppercase;
     font-weight: bold;
     color: white;
@@ -38,11 +49,82 @@
 .list__country > *:not(:first-child) {
     width: 100%;
     height: 100%;
-    padding: 1rem 1rem;
+    padding: .65rem 1rem;
+}
+.list__country > .pib, .list__country > .inflation {
+    color: white;
+    background-color: lightgray;
 }
 
 .list__link {
     display: block;
     text-decoration: none;
     color: black;
+}
+
+.paginator {
+    cursor: default;
+    width: max-content;
+    background-color: white;
+    padding: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .5rem;
+    border: 2px solid black;
+}
+.paginator--page {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: white;
+    border: 1px solid darkgray;
+    border-radius: .5rem;
+    font-size: 2.2rem;
+}
+.paginator--page:hover {
+    background-color: rgb(188, 193, 212);
+    color: white;
+}
+.paginator > * {
+    margin: 0 .25rem;
+}
+.paginator > span {
+    line-height: 3rem;
+    font-size: 3.5rem;
+    margin: 0 1rem;
+}
+.paginator--current {
+    text-align: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: .5rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+.results {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.list__bottom {
+    margin: .5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
