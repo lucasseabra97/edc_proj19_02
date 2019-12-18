@@ -1,6 +1,6 @@
 import requests
 import json
-
+import re
 import json
 from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
@@ -63,6 +63,17 @@ i = 0
 for d in data:
 
     i += 1
+    name = d['flag']['value'].replace(".svg","").split('/')[-1:] 
+    name = [re.sub('[0-9]', '', i) for i in name] 
+    name = (name[0].replace("Flagof","").split("%"))
+    stri =""
+    name = [i for i in name[2:] if len(i)>2 and i != "the" ]
+    for y in name:
+        if y[0].isupper():
+            stri += " "+ y
+    d['name']['value']=stri
+
+
 
     id = d['country']['value'].split('/')[-1]
     del d['country']

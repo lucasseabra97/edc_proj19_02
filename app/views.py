@@ -250,6 +250,7 @@ def populacao(request):
                     ?country rdf:type country:.
                     ?country pred:pop ?populacao.
                     ?country pred:name ?name.
+                    ?country pred:life ?life_expectancy
                     OPTIONAL {?country pred:flag ?flag.}
                     OPTIONAL {?country pred:plate ?plate.}
                 }order by desc(xsd:double(?populacao))
