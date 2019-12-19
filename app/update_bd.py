@@ -39,17 +39,7 @@ WHERE
     ?country wdt:P421 ?localtmp.
     ?localtmp wdt:P373 ?localtime
   }
-<<<<<<< HEAD
-  OPTIONAL { SELECT *
-                WHERE
-                {
-                ?country p:P1082 ?p .
-                ?p pq:P585 ?year ;
-                    ps:P1082 ?pop .
-                }order by asc(?year) }
-=======
   OPTIONAL { ?country wdt:P1082 ?population }
->>>>>>> c50b5e60c943dde676d78a0abafe4e1ebd631f20
   OPTIONAL { ?country wdt:P2250 ?life }
   OPTIONAL { ?country wdt:P242 ?location }
   OPTIONAL { ?country wdt:P1279 ?inflation }
