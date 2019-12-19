@@ -28,4 +28,5 @@ urlpatterns = [
     path('populacao', views.populacao, name="populacao"),
     path('inflacao', views.inflacao, name="inflacao"),
     path('admin/', admin.site.urls),
+    path('presidents',views.presidents, name="presidents"),
 ]
