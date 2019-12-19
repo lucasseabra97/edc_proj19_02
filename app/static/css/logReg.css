@@ -1,0 +1,31 @@
+.landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.landing > * {
+    margin-bottom: .5rem;
+}
+.landing > input:last-of-type {
+    margin-bottom: 2rem;
+}
+.landing > input {
+    border-radius: .25rem;
+    border: 1px solid rgb(195, 113, 54);
+    text-align: center;
+    width: 20;
+    height: 3rem;
+}   
+.landing > button {
+    width: 25rem;
+    height: 3rem;
+    transition: color .2s ease;
+    background-color: #2b3145;
+    color: white;
+    border-radius: .33rem;
+}   
+.landing > button:hover {
+    color: rgb(195, 113, 54);
+}

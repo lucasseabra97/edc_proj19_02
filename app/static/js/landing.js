@@ -1,6 +1,6 @@
 async function loadListeners() {
     //table listeners
-    var countries = document.getElementsByClassName("list__item")
+    var countries = document.getElementsByClassName("list__country")
     for(var c of countries){
         c.addEventListener('click', (event) => {
             changeURLCountry(event.target.parentElement.children[2].innerHTML)

@@ -1,0 +1,7 @@
+SELECT *
+WHERE
+{
+wd:Q45 p:P1279 ?p .
+  ?p pq:P585 ?year ;
+     ps:P1279 ?inflation .
+}order by ?year

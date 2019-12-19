@@ -18,8 +18,10 @@ from django.urls import path
 from app import views
 
 urlpatterns = [
-    path('', views.landing, name="landing"),
-    path('teste', views.teste, name="teste"),
+    path('landing', views.landing, name="landing"),
+    path('', views.logReg, name="logReg"),
+    path('register', views.register, name="register"),
+    path('login', views.login, name="login"),
     path('country', views.country, name="country"),
     path('pib', views.pib, name="pib"),
     path('area', views.area, name="area"),
