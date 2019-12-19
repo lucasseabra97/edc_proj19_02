@@ -64,7 +64,7 @@ values.forEach(v => {
 Array.from(document.getElementsByClassName('paginator--page')).forEach(p => {
     const order = getUrlParameter('order')
     p.onclick = () => {
-        document.location.href = 'http://localhost:8000/?page=' + p.innerHTML + (order ? '&order=' + order : '')
+        document.location.href = 'http://localhost:8000/landing?page=' + p.innerHTML + (order ? '&order=' + order : '')
     }
 })
 console.log(getUrlParameter('page'))

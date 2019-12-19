@@ -1,18 +1,25 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="container">
-        <span>{{tmp.name}}</span>
-        <img src="{{tmp.flag}}" alt="">
-        <img src="{{tmp.location}}" alt="">
-        {{tmp}}
+    <div class="country">
+        <div class="country__main">
+            <span>{{tmp.name.value}}</span>
+            <img src="{{tmp.flag.value}}" alt="">
+        </div>
+        <div>
+            <span>Área: {{tmp.area.value}}m2"</span>
+            <span>População: {{tmp.population.value}}"</span>
+            <span>Inflação: {{tmp.inflation.value}}%"</span>
+            <span>PIB: {{tmp.pib.value}}%"</span>
+        </div>
+        <img src="{{tmp.location.value}}" alt="">
     </div>
 
-<<<<<<< HEAD
     <div class="charts">
         <span id="dataSpan_infla" style="display: none">{{data_infla}}</span>
         <span id="titleSpan_infla" style="display: none">{{title_infla}}</span>
         <span id="typeSpan_infla" style="display: none">{{type_infla}}</span>
+        <span id="yAxeSpan_infla" style="display: none">{{yAxe_infla}}</span>
         <div class="country__chart">
             <canvas id="chart_infla" ></canvas>
         </div>
@@ -20,25 +27,10 @@
         <span id="dataSpan_pop" style="display: none">{{data_pop}}</span>
         <span id="titleSpan_pop" style="display: none">{{title_pop}}</span>
         <span id="typeSpan_pop" style="display: none">{{type_pop}}</span>
+        <span id="yAxeSpan_pop" style="display: none">{{yAxe_pop}}</span>
         <div class="country__chart">
             <canvas id="chart_pop" ></canvas>
         </div>
-=======
-    <span id="dataSpan_infla" style="display: none">{{data_infla}}</span>
-    <span id="titleSpan_infla" style="display: none">{{title_infla}}</span>
-    <span id="typeSpan_infla" style="display: none">{{type_infla}}</span>
-    <span id="yAxeSpan_infla" style="display: none">{{yAxe_infla}}</span>
-    <div style="position: relative; max-height:500px; width:1000px">
-            <canvas id="chart_infla" class="country__chart"></canvas>
-    </div>
-
-    <span id="dataSpan_pop" style="display: none">{{data_pop}}</span>
-    <span id="titleSpan_pop" style="display: none">{{title_pop}}</span>
-    <span id="typeSpan_pop" style="display: none">{{type_pop}}</span>
-    <span id="yAxeSpan_pop" style="display: none">{{yAxe_pop}}</span>
-    <div style="position: relative; max-height:500px; width:1000px">
-            <canvas id="chart_pop" class="country__chart"></canvas>
->>>>>>> 0f8dbb017e7e5528016900a7c7059da36f225079
     </div>
 
 {% endblock %}

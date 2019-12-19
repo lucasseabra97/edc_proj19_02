@@ -8,7 +8,7 @@
 .list__country {
     height: 3rem;
     display: grid;
-    grid-template-columns: 5rem 10rem minmax(10rem, .4fr) minmax(8rem, .2fr) minmax(12rem, .25fr) minmax(10rem, .2fr) minmax(7rem, .15fr) minmax(7rem, .15fr);
+    grid-template-columns: 5rem 10rem minmax(10rem, .35fr) minmax(8rem, .2fr) minmax(8rem, .2fr) minmax(12rem, .25fr) minmax(10rem, .2fr) minmax(7rem, .15fr) minmax(7rem, .15fr);
     align-items: center;
     background-color: rgb(188, 193, 212);
     padding-left: 1rem;
