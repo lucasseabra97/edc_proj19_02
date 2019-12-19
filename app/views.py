@@ -54,7 +54,7 @@ def register(request):
 
         payload_query = {"update": query}
         res = accessor.sparql_update(body=payload_query, repo_name=repo_name)
-        
+
         return HttpResponse(status = 200)
 
 @csrf_exempt
@@ -187,9 +187,11 @@ def country(request):
         'title_infla': 'INFLATION EVOLUTION',
         'type_infla': 'line',
         'data_infla' : json.dumps(chartData_infla),
+        'yAxe_infla' : 'inflation',
         'title_pop': 'POPULATION EVOLUTION (in Millions)',
         'type_pop': 'line',
         'data_pop' : json.dumps(chartData_pop),
+        'yAxe_pop' : 'population'
     })
 
 
