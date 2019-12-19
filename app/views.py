@@ -360,7 +360,34 @@ def inflacao(request):
     return render(request, 'inflacao.html',  {
         'tmp': tmp
     })
-    
+
+def presidents(request):
+    query =   """ PREFIX country:<http://edc_2019.org/presidents/>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX pred: <http://edc_2019.org/pred/>
+
+                SELECT  ?country ?ministro ?imag ?republica 
+                WHERE
+                {
+                ?country wdt:P31 wd:Q6256;
+                        wdt:P41 ?flag;
+                        wdt:P6  ?president;
+                        wdt:P35  ?rep.
+                ?president wdt:P735 ?presidentname.
+                OPTIONAL{?presidentname wdt:P1705 ?ministro.}
+                ?president wdt:P18 ?imag.
+                OPTIONAL{?rep  wdt:P1559 ?republica.}
+                }ORDER BY desc(?presidentname)                
+            """
+    tmp = parseQuery(query)
+
+    return render(request, 'presidents.html',  {
+        'tmp': tmp
+    })
+
+
+
+
 def parseQuery(query):
     payload_query = {"query": query}
     res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings']
