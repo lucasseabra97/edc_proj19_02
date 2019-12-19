@@ -6,6 +6,7 @@ from s4api.graphdb_api import GraphDBApi
 from s4api.swagger import ApiClient
 import math
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect
 
 endpoint = "http://localhost:7200"
 repo_name = "edc_2019"
@@ -33,19 +34,16 @@ def register(request):
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX foaf: <http://xmlns.com/foaf/0.1/>
         PREFIX pred: <http://edc_2019.org/pred/>
-        select ?user ?pass where {
-            ?user rdf:type foaf:Person.
-            ?user pred:password ?pass
-        }
-    """
+        PREFIX user: <http://edc_2019.org/user/>
+        select * {{
+            user:{0} rdf:type user:
+        }}
+    """.format(user)
     payload_query = {"query": query}
-    res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))
+    res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings']
     
-    tmp = {}
-    for r in res['results']['bindings']:
-        tmp[r['user']['value'].split('/')[-1]] = r['pass']['value']
-    
-    if user in tmp:
+    print("HERE", res)
+    if len(res):
         return HttpResponse(status = 400)
     else:
         query = """
@@ -55,7 +53,8 @@ def register(request):
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         INSERT DATA {{
             user:{0} pred:password \"{1}\";
-                    rdf:type foaf:Person.
+                     rdf:type user:;
+                     rdf:type foaf:Person.
         }}
         """.format(user, passwd)
 
@@ -91,6 +90,80 @@ def login(request):
             return HttpResponse(status = 200)
     else:
         return HttpResponse(status = 400)
+
+@csrf_exempt
+def notes(request):
+    
+    username = request.COOKIES.get('username')
+    password = request.COOKIES.get('password')
+
+    query = """
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX pred: <http://edc_2019.org/pred/>
+        PREFIX user: <http://edc_2019.org/user/>
+        select ?note where {{
+            user:{0} rdf:type user:.
+            user:{0} pred:password '{1}'.
+            user:{0} pred:note ?note
+        }}
+    """.format(username, password)
+    payload_query = {"query": query}
+    res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings']
+    
+    return render(request, 'notes.html',  {
+        'notes': res,
+        'username': username
+    })
+    
+@csrf_exempt
+def addnote(request):
+    
+    username = request.COOKIES.get('username')
+    password = request.COOKIES.get('password')
+    note = request.GET.get('note')
+
+    query = """
+        PREFIX user:<http://edc_2019.org/user/>
+        PREFIX pred:<http://edc_2019.org/pred/>
+        INSERT DATA {{
+            user:{0} pred:password '{1}';
+                     pred:note '{2}'
+        }}
+    """.format(username, password, note)
+
+    print(query)
+
+    payload_query = {"update": query}
+    res = accessor.sparql_update(body=payload_query, repo_name=repo_name)
+    
+    print("HERE", res)
+    return redirect('notes')
+    
+@csrf_exempt
+def removenote(request):
+    
+    username = request.COOKIES.get('username')
+    password = request.COOKIES.get('password')
+    note = request.GET.get('note')
+
+    query = """
+        PREFIX user:<http://edc_2019.org/user/>
+        PREFIX pred:<http://edc_2019.org/pred/>
+        DELETE {{
+            user:{0} pred:note '{2}'
+        }} WHERE {{
+            user:{0} pred:password '{1}'
+        }}
+    """.format(username, password, note)
+
+    print(query)
+
+    payload_query = {"update": query}
+    res = accessor.sparql_update(body=payload_query, repo_name=repo_name)
+    
+    print("HERE", res)
+    return redirect('notes')
 
 def landing(request):
 
@@ -156,10 +229,6 @@ def landing(request):
         dir
     )
 
-    print(query)
-
-    print(request.GET.get('search'))
-
     payload_query = {"query": query}
     res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings']
 
@@ -193,6 +262,7 @@ def country(request):
         PREFIX country:<http://edc_2019.org/country/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX pred: <http://edc_2019.org/pred/>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
         SELECT  
         ?plate 
@@ -202,6 +272,7 @@ def country(request):
         ?inflation ?area
         ?currency ?pib 
         ?capital ?capitalName ?capitalArea ?capitalPopulation ?capitalImg
+        ?president ?presidentName ?presidentImage
         WHERE
         {{
             OPTIONAL {{ country:{0} rdf:type country:. }}
@@ -219,16 +290,26 @@ def country(request):
             OPTIONAL {{ country:{0} pred:capital ?capital. }}
             OPTIONAL {{ 
                 SELECT ?capital 
-                    (SAMPLE(?capitalName) as ?capitalName)
-                    (SAMPLE(?capitalArea) as ?capitalArea) 
-                    (SAMPLE(?capitalPopulation) as ?capitalPopulation) 
-                    (SAMPLE(?capitalImg) as ?capitalImg) {{
-                        OPTIONAL {{ ?capital pred:name ?capitalName. }}
-                        OPTIONAL {{ ?capital pred:area ?capitalArea. }}
-                        OPTIONAL {{ ?capital pred:population ?capitalPopulation.  }}
-                        OPTIONAL {{ ?capital pred:img ?capitalImg. }}
+                (SAMPLE(?capitalName) as ?capitalName)
+                (SAMPLE(?capitalArea) as ?capitalArea) 
+                (SAMPLE(?capitalPopulation) as ?capitalPopulation) 
+                (SAMPLE(?capitalImg) as ?capitalImg) {{
+                    OPTIONAL {{ ?capital pred:name ?capitalName. }}
+                    OPTIONAL {{ ?capital pred:area ?capitalArea. }}
+                    OPTIONAL {{ ?capital pred:population ?capitalPopulation.  }}
+                    OPTIONAL {{ ?capital pred:img ?capitalImg. }}
                 }}
                 GROUP BY ?capital
+            }}
+            OPTIONAL {{ country:{0} pred:president ?president. }}
+            OPTIONAL {{ 
+                SELECT ?president 
+                (SAMPLE(?presidentName) as ?presidentName)
+                (SAMPLE(?presidentImage) as ?presidentImage)  {{
+                    OPTIONAL {{ ?president foaf:name ?presidentName. }}
+                    OPTIONAL {{ ?president foaf:Image ?presidentImage. }}
+                }}
+                GROUP BY ?president
             }}
         }} 
     """.format(id)
@@ -293,3 +374,31 @@ def country(request):
         'data_pop' : json.dumps(chartData_pop),
         'yAxe_pop' : 'population'
     })
+
+
+def presidents(request):
+    query =   """ 
+            PREFIX country:<http://edc_2019.org/presidents/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX pred: <http://edc_2019.org/pred/>
+
+            SELECT  ?country ?ministro ?imag ?republica 
+            WHERE
+            {
+            ?country wdt:P31 wd:Q6256;
+                    wdt:P41 ?flag;
+                    wdt:P6  ?president;
+                    wdt:P35  ?rep.
+            ?president wdt:P735 ?presidentname.
+            OPTIONAL{?presidentname wdt:P1705 ?ministro.}
+            ?president wdt:P18 ?imag.
+                OPTIONAL{?rep  wdt:P1559 ?republica.}
+            }ORDER BY desc(?presidentname)                
+            """
+    tmp = parseQuery(query)
+
+    return render(request, 'presidents.html',  {
+        'tmp': tmp
+    })
+
+        

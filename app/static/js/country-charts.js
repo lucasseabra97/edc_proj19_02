@@ -3,14 +3,27 @@ function createChart(chart, ctx, type, labels, data, title, yAxe){
     data: {
         labels: labels,
         datasets: [{
-            data: data,
-            backgroundColor: [
-            ],
-            borderColor: [
-                'rgba(0,0,0,1)'
-            ],
+            label: yAxe,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            borderColor: "rgba(0,0,0,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
             borderWidth: 1,
-            fill: false
+            pointBorderColor: "rgba(45,45,45,1)",
+            pointBackgroundColor: "rgba(45,45,45,1)",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(45,45,45,1)",
+            pointHoverBorderColor: "rgba(45,45,45,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 10,
+            data: data,
+            spanGaps: false,
         }]
     },
     options: {

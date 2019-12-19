@@ -29,7 +29,7 @@
     border: 3px solid rgb(255, 251, 253);
     border-radius: 1.5rem;
     cursor: pointer;
-    color: white !important;
+    color: white !important ;
 
     justify-content: space-between;
 }

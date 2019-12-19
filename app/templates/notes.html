@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="notes" typeof="user: wikidata: foaf:Person" about="user:{{username}}" xmlns:wikidata="http://www.wikidata.org/entity/" xmlns:pred="http://edc_2019.org/pred/"> 
+        <textarea id="noteId" type="text" value="'adsfasdf'"></textarea>
+        <button onclick="onNote(this)">Save</button>
+        {% for note in notes %}
+            <div property="pred:note" class="notes--note"><span>{{note.note.value}}</span><a href="http://localhost:8000/removenote?note={{note.note.value}}">remover</a></div>
+        {% endfor %}
+    </div>
+{% endblock %}

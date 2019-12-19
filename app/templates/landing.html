@@ -3,7 +3,7 @@
 {% block content %}
 
     <div>
-        <div class="list" xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/"> 
+        <div class="list" xmlsn:foaf="http://xmlns.com/foaf/0.1/" xmlns:pred="http://edc_2019.org/pred/" xmlns:wikidata="http://www.wikidata.org/entity/"  xmlns:country="http://edc_2019.org/country/"> 
             <div class="list__country title">
                 <span></span>
                 {% for c in table_order %}
@@ -11,7 +11,7 @@
                 {% endfor %}
             </div>
             {% for c in countries %}
-            <a typeof="country:" about="country:{{c.country.value|uri_id}}" href="http://localhost:8000/country?id={{c.country.value|uri_id}}" class="list__country" >  
+            <a typeof="country: wikidata:" about="country:{{c.country.value|uri_id}}" href="http://localhost:8000/country?id={{c.country.value|uri_id}}" class="list__country" >  
                 <img property="pred:flag" src={{c.flag.value}} alt="">
                 {% for k in table_order %} 
                     <span property="pred:{{k}}" class={{k}}>{{ c|dict_value:k }}</span>

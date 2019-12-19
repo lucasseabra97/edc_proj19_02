@@ -25,6 +25,10 @@ searchInput.addEventListener('keydown', (event) => {
     }
 })
 
+function onNote() {
+    document.location.href = 'http://localhost:8000/addnote?note=' + this.document.getElementById('noteId').value
+}
+
 function sort(col) {
     const order = getUrlParameter('order')
     var colOrder = col.children[0].innerHTML.split(' ')[0]
@@ -81,3 +85,7 @@ values.forEach(v => {
         })
     }
 })
+
+if (!document.cookie.includes('username') && window.location.pathname != '/') {
+    document.location.href = 'http://localhost:8000'
+}

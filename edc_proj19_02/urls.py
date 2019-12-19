@@ -23,5 +23,9 @@ urlpatterns = [
     path('register', views.register, name="register"),
     path('login', views.login, name="login"),
     path('country', views.country, name="country"),
+    path('notes', views.notes, name="notes"),
+    path('addnote', views.addnote, name="addnote"),
+    path('removenote', views.removenote, name="removenote"),
     path('admin/', admin.site.urls),
+    path('presidents',views.presidents, name="presidents"),
 ]
