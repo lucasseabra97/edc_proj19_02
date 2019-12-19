@@ -1,51 +1,54 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="country">
-        <div class="country__main">
-            <span>{{tmp.name.value}}</span>
-            <img src="{{tmp.flag.value}}" alt="">
-        </div>
-        <div class="country__info">
-            <span>Inflation: {{tmp.inflation.value}}%</span>
-            <span>PIB: {{tmp.pib.value}}%</span>
-            <span>Area: {{tmp.area.value}}m2</span>
-            <span>Population: {{tmp.population.value}}</span>
-            <span>Life expectancy: {{tmp.life.value}}</span>
-        </div>
-        <img src="{{tmp.location.value}}" alt="">
-    </div>
+    <div xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/"> 
 
-    {% if tmp.capitalName.value %}
-        <div class="country">
-            <div class="country__main">
-                <span>Capital - {{tmp.capitalName.value}}</span>
-                <img src="{{tmp.capitalImg.value}}" alt="">
+        <div typeof="country:" about="country:{{country.id}}" >
+            <div class="display">
+                <div class="display__main">
+                    <span>{{country.name.value}}</span>
+                    <img property="pred:flag" src="{{country.flag.value}}" alt="">
+                </div>
+                <div class="display__info">
+                    {% for k in country_order %} 
+                        <span property="pred:{{k}}">{{k}}: {{ country|dict_value:k }}{{units|get:forloop.counter0}}</span>
+                    {% endfor %}
+                </div>
+                <img src="{{country.location.value}}" alt="">
             </div>
-            <div class="country__info">
-                <span>Area: {{tmp.capitalArea.value}}m2</span>
-                <span>Population: {{tmp.capitalPopulation.value}}</span>
-            </div>
-        </div>
-    {% else %}
-        <span>Sem informação de capital!</span>    
-    {% endif %}
-
-    <div class="charts">
-        <span id="dataSpan_infla" style="display: none">{{data_infla}}</span>
-        <span id="titleSpan_infla" style="display: none">{{title_infla}}</span>
-        <span id="typeSpan_infla" style="display: none">{{type_infla}}</span>
-        <span id="yAxeSpan_infla" style="display: none">{{yAxe_infla}}</span>
-        <div class="country__chart">
-            <canvas id="chart_infla" ></canvas>
-        </div>
     
-        <span id="dataSpan_pop" style="display: none">{{data_pop}}</span>
-        <span id="titleSpan_pop" style="display: none">{{title_pop}}</span>
-        <span id="typeSpan_pop" style="display: none">{{type_pop}}</span>
-        <span id="yAxeSpan_pop" style="display: none">{{yAxe_pop}}</span>
-        <div class="country__chart">
-            <canvas id="chart_pop" ></canvas>
+            {% if country.capitalName.value %}
+                <div rel="pred:capital" typeof="capital:" about="capital:{{country.capital.value|uri_id}}" class="display">
+                    <div class="display__main">
+                        <span>Capital - {{country.capitalName.value}}</span>
+                        <img property="pred:img" src="{{country.capitalImg.value}}" alt="">
+                    </div>
+                    <div class="display__info">
+                        <span property="pred:area" >Area: {{country.capitalArea.value}} Km2</span>
+                        <span property="pred:population" >Population: {{country.capitalPopulation.value}}</span>
+                    </div>
+                </div>
+            {% else %}
+                Sem informação de capital!
+            {% endif %}
+        </div>
+
+        <div class="charts">
+            <span id="dataSpan_infla" style="display: none">{{data_infla}}</span>
+            <span id="titleSpan_infla" style="display: none">{{title_infla}}</span>
+            <span id="typeSpan_infla" style="display: none">{{type_infla}}</span>
+            <span id="yAxeSpan_infla" style="display: none">{{yAxe_infla}}</span>
+            <div class="display__chart">
+                <canvas id="chart_infla" ></canvas>
+            </div>
+        
+            <span id="dataSpan_pop" style="display: none">{{data_pop}}</span>
+            <span id="titleSpan_pop" style="display: none">{{title_pop}}</span>
+            <span id="typeSpan_pop" style="display: none">{{type_pop}}</span>
+            <span id="yAxeSpan_pop" style="display: none">{{yAxe_pop}}</span>
+            <div class="display__chart">
+                <canvas id="chart_pop" ></canvas>
+            </div>
         </div>
     </div>
 

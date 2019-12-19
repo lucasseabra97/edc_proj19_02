@@ -20,3 +20,8 @@ def dict_type(d, k):
 def uri_id(uri):
     '''Returns the given wikidata id from a uri.'''
     return uri.split('/')[-1]
+
+@register.filter(name='get')
+def get(array, index):
+    '''Returns the given wikidata id from a uri.'''
+    return array[index]

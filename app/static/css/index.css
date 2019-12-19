@@ -20,8 +20,6 @@
 .list__country:hover {
     color: white;
     background-color: rgb(106, 127, 250);
-}
-.list__country:not(.title):hover {
     cursor: pointer;
 }
 .list__country:not(.title) > :not(:first-child) {
@@ -31,11 +29,17 @@
     border-bottom: 1px solid rgb(120,120,120);
 }
 .list__country > span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-weight: 700;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.list__country > span > span:last-of-type:not(:first-of-type) {
+    font-size: 3.5rem;
 }
 .list__country >:first-child {
     width: 4rem;
@@ -46,6 +50,7 @@
     text-transform: uppercase;
     font-weight: bold;
     color: white;
+    height: 4rem;
 }
 .list__country > *:not(:first-child) {
     width: 100%;

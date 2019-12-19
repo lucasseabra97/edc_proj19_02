@@ -21,8 +21,6 @@
 }
 
 .header__logo {
-    min-width: 24rem;
-    max-width: 24rem;
     transition: background-color .4s ease;
     height: 100%;
     margin-right: auto;
@@ -31,7 +29,7 @@
     border: 3px solid rgb(255, 251, 253);
     border-radius: 1.5rem;
     cursor: pointer;
-    color: white;
+    color: white !important;
 
     justify-content: space-between;
 }

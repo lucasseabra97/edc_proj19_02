@@ -97,18 +97,23 @@ def landing(request):
     limit = 20
     page = int(request.GET.get('page')) if request.GET.get('page') else 1
     order = request.GET.get('order') or 'name'
+    search = (request.GET.get('search') or '').lower()
+    dir = (request.GET.get('dir') or '').upper()
 
     query = """
         PREFIX country:<http://edc_2019.org/country/>
+        PREFIX pred:<http://edc_2019.org/pred/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
         SELECT  
         *
         WHERE
-        {
+        {{
             ?country rdf:type country:.
-        } 
-    """
+            ?country pred:name ?name
+            FILTER (CONTAINS(lcase(?name), '{0}') || CONTAINS(lcase(?plate), '{0}')) 
+        }}
+    """.format(search)
 
     payload_query = {"query": query}
     size = len(json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings'])
@@ -131,6 +136,7 @@ def landing(request):
             OPTIONAL {{ ?country rdf:type country:. }}
             OPTIONAL {{ ?country pred:flag ?flag. }}
             OPTIONAL {{ ?country pred:name ?name. }}
+            FILTER (CONTAINS(lcase(?name), '{3}') || CONTAINS(lcase(?plate), '{3}')) 
             OPTIONAL {{ ?country pred:plate ?plate. }}
             OPTIONAL {{ ?country pred:currency ?currency. }}
             OPTIONAL {{ ?country pred:population ?population. }}
@@ -139,10 +145,20 @@ def landing(request):
             OPTIONAL {{ ?country pred:inflation ?inflation. }}
             OPTIONAL {{ ?country pred:pib ?pib. }}
         }}
-        ORDER BY {2}
+        ORDER BY {4}({2})
         OFFSET {0}
         LIMIT {1}
-    """.format((page - 1) * limit, limit, 'DESC(xsd:float(?{}))'.format(order) if (order in ['area', 'population', 'inflation', 'pib']) else '?' + order)
+    """.format(
+        (page - 1) * limit, 
+        limit, 
+        'xsd:float(?{})'.format(order) if (order in ['area', 'population', 'inflation', 'pib']) else '?' + order,
+        search,
+        dir
+    )
+
+    print(query)
+
+    print(request.GET.get('search'))
 
     payload_query = {"query": query}
     res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings']
@@ -150,22 +166,23 @@ def landing(request):
     maxPage = math.ceil(size / limit)
 
     pages = [i+1 for i in range(maxPage)]
-    left = [i for i in pages if page - i < 4 and i < page]
-    right = [i for i in pages if i - page < 4 and i > page]
+    left = [i for i in pages if page - i < 3 and i < page]
+    right = [i for i in pages if i - page < 3 and i > page]
 
     print(left, right)
 
     return render(request, 'landing.html', {
         'table_order': ['plate', 'name', 'localtime', 'currency', 'population', 'area', 'inflation', 'pib'],
+        'units': ['','','','','',' km2','%','%'],
         'countries': res,
         'size': size,
         'left': left,
         'right': right,
         'page': page,
         'maxPage': maxPage,
-        'showMax': (maxPage - page) >= 4,
-        'showMin': page >= 4,
-        'limit': limit,
+        'showMax': (maxPage - page) >= 3,
+        'showMin': page >= 3,
+        'showing': size % limit if page == maxPage and size % limit != 0 else limit,
     })
 
 
@@ -259,7 +276,14 @@ def country(request):
         chartData_pop[d['year']['value'].split('-')[0]] = str(int(d['population']['value']) / 1000000)
 
     return render(request, 'country.html',  {
-        'tmp': res,
+        'country': {
+            'id': id,
+            **res
+        },
+        'country_order': ['inflation', 'pib', 'area', 'population', 'life'],
+        'units': ['%','%','Km2','',' years'],
+
+
         'title_infla': 'INFLATION EVOLUTION',
         'type_infla': 'line',
         'data_infla' : json.dumps(chartData_infla),
@@ -269,116 +293,3 @@ def country(request):
         'data_pop' : json.dumps(chartData_pop),
         'yAxe_pop' : 'population'
     })
-
-
-def pib(request):
-    query = """ PREFIX country:<http://edc_2019.org/country/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX pred: <http://edc_2019.org/pred/>
-
-                SELECT *
-                {
-                    ?country rdf:type country:.
-                    ?country pred:pib ?pib.
-                    ?country pred:name ?name.
-                    OPTIONAL {?country pred:flag ?flag.}
-                    OPTIONAL {?country pred:plate ?plate.}
-                }order by desc(xsd:double(?pib))
-            """
-
-    tmp = parseQuery(query)
-    chartData ={}
-    for t in tmp:
-        chartData[t['name']] = t['pib']
-    return render(request, 'pib.html',  {
-        'tmp': tmp,
-        'data': json.dumps(chartData),
-        'title': 'PIB',
-        'type': 'bar'
-    })
-
-def area(request):
-    query = """ PREFIX country:<http://edc_2019.org/country/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX pred: <http://edc_2019.org/pred/>
-
-                SELECT *
-                {
-                    ?country rdf:type country:.
-                    ?country pred:area ?area.
-                    ?country pred:name ?name.
-                    OPTIONAL {?country pred:flag ?flag.}
-                    OPTIONAL {?country pred:plate ?plate.}
-                }order by desc(xsd:double(?area))
-            """
-
-    tmp = parseQuery(query)
-
-    return render(request, 'area.html',  {
-        'tmp': tmp
-    })
-
-def populacao(request):
-    query = """ PREFIX country:<http://edc_2019.org/country/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX pred: <http://edc_2019.org/pred/>
-
-                SELECT *
-                {
-                    ?country rdf:type country:.
-                    ?country pred:population ?populacao.
-                    ?country pred:name ?name.
-                    ?country pred:life ?life_expectancy
-                    OPTIONAL {?country pred:flag ?flag.}
-                    OPTIONAL {?country pred:plate ?plate.}
-                }order by desc(xsd:double(?populacao))
-            """
-
-    tmp = parseQuery(query)
-
-    return render(request, 'populacao.html',  {
-        'tmp': tmp
-    })
-
-def inflacao(request):
-    query = """ PREFIX country:<http://edc_2019.org/country/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX pred: <http://edc_2019.org/pred/>
-
-                SELECT *
-                {
-                    ?country rdf:type country:.
-                    ?country pred:inflation ?inflacao.
-                    ?country pred:name ?name.
-                    OPTIONAL {?country pred:flag ?flag.}
-                    OPTIONAL {?country pred:plate ?plate.}
-                }order by desc(xsd:double(?inflacao))
-            """
-
-    tmp = parseQuery(query)
-
-    return render(request, 'inflacao.html',  {
-        'tmp': tmp
-    })
-    
-def parseQuery(query):
-    payload_query = {"query": query}
-    res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings']
-    
-    countries = {}
-
-    for c in res:
-        tmp = c['country']['value'].replace('http://edc_2019.org/country/', '')
-        countries[tmp] = {}
-        keys = c.keys()
-        for k in keys:
-            countries[tmp][k] = c[k]['value']
-
-    tmp = list(map(lambda x: {
-        'id': x,
-        **countries[x]
-    },list(countries)))
-
-    return tmp
-
-

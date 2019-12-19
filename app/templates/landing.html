@@ -3,18 +3,18 @@
 {% block content %}
 
     <div>
-        <div class="list" xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/" about="http://edc_2019.org/" typeof="edc:Country"> 
+        <div class="list" xmlns:pred="http://edc_2019.org/pred/" xmlns:capital="http://edc_2019.org/capital/" xmlns:country="http://edc_2019.org/country/"> 
             <div class="list__country title">
                 <span></span>
                 {% for c in table_order %}
-                    <span>{{c}}</span>
+                    <span id="{{c}}" onclick="sort(this)" ><span >{{c}} {% if units|get:forloop.counter0 %}({{units|get:forloop.counter0}}){% endif %}</span></span>
                 {% endfor %}
             </div>
             {% for c in countries %}
-            <a href="http://localhost:8000/country?id={{c.country.value|uri_id}}" class="list__country" >  
-                <img src={{c.flag.value}} alt="">
+            <a typeof="country:" about="country:{{c.country.value|uri_id}}" href="http://localhost:8000/country?id={{c.country.value|uri_id}}" class="list__country" >  
+                <img property="pred:flag" src={{c.flag.value}} alt="">
                 {% for k in table_order %} 
-                    <span class={{k}}>{{ c|dict_value:k }}</span>
+                    <span property="pred:{{k}}" class={{k}}>{{ c|dict_value:k }}</span>
                 {% endfor %}
             </a>
             {% endfor %}
@@ -38,7 +38,7 @@
                 {% endif %}
             </div>
             <div class="results">
-                Está a ver {{limit}} dos {{size}} resultados de países
+                At page {{page}} showing {{showing}} of {{size}} countries.
             </div>
         </div>
     </div>

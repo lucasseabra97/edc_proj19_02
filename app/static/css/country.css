@@ -14,7 +14,7 @@
     align-items: center;
 }
 
-.country__chart {
+.display__chart {
     width: 100%;
     background-color: white;
     margin: 10px;
@@ -22,36 +22,37 @@
     border-radius: .5rem;
 }
 
-.country {
+.display {
     display: flex;
     align-items: flex-end;
     margin-bottom: 1rem;
 }
-.country > img {
+.display > img {
     margin-left: auto;
     height: 20rem;
 }
 
-.country__main {
+.display__main {
     display: flex;
     flex-direction: column;
     max-width: 40rem;
 }
-.country__main > span {
+.display__main > span {
     font-size: 3rem;
 }
-.country__main > img {
+.display__main > img {
     width: 40rem;
     height: 20rem;
 }
 
-.country__info {
+.display__info {
+    text-transform: capitalize;
     margin-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
-.country__info > span {
+.display__info > span {
     font-weight: 700;
     margin-top: .5rem;
     font-size: 1.8rem;

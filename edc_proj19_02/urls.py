@@ -23,9 +23,5 @@ urlpatterns = [
     path('register', views.register, name="register"),
     path('login', views.login, name="login"),
     path('country', views.country, name="country"),
-    path('pib', views.pib, name="pib"),
-    path('area', views.area, name="area"),
-    path('populacao', views.populacao, name="populacao"),
-    path('inflacao', views.inflacao, name="inflacao"),
     path('admin/', admin.site.urls),
 ]
