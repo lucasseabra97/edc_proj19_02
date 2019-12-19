@@ -6,6 +6,7 @@
     border: 2px solid black;
 }
 .list__country {
+    color: black;
     height: 3rem;
     display: grid;
     grid-template-columns: 5rem 10rem minmax(10rem, .35fr) minmax(8rem, .2fr) minmax(8rem, .2fr) minmax(12rem, .25fr) minmax(10rem, .2fr) minmax(7rem, .15fr) minmax(7rem, .15fr);
@@ -128,3 +129,5 @@ input[type=number] {
     justify-content: space-between;
     align-items: flex-start;
 }
+
+a, a:-webkit-any-link { color: inherit; } 

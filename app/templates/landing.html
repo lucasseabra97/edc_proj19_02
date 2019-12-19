@@ -11,12 +11,12 @@
                 {% endfor %}
             </div>
             {% for c in countries %}
-            <div class="list__country" >  
+            <a href="http://localhost:8000/country?id={{c.country.value|uri_id}}" class="list__country" >  
                 <img src={{c.flag.value}} alt="">
                 {% for k in table_order %} 
                     <span class={{k}}>{{ c|dict_value:k }}</span>
                 {% endfor %}
-            </div>
+            </a>
             {% endfor %}
         </div>
         <div class="list__bottom">

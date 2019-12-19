@@ -53,6 +53,7 @@ var yAxe_infla = document.getElementById("yAxeSpan_infla").innerHTML;
 
 var myChart_infla;
 var ctx_infla = document.getElementById("chart_infla");
+ctx_infla.height = 100
 
 createChart(myChart_infla, ctx_infla, type_infla, Object.keys(dataSpan_infla), Object.values(dataSpan_infla), title_infla, yAxe_infla)
 
@@ -64,5 +65,6 @@ var yAxe_pop = document.getElementById("yAxeSpan_pop").innerHTML;
 
 var myChart_pop;
 var ctx_pop = document.getElementById("chart_pop");
+ctx_pop.height = 100
 
 createChart(myChart_pop, ctx_pop, type_pop, Object.keys(dataSpan_pop), Object.values(dataSpan_pop), title_pop, yAxe_pop)
