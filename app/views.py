@@ -133,7 +133,7 @@ def landing(request):
             OPTIONAL {{ ?country pred:name ?name. }}
             OPTIONAL {{ ?country pred:plate ?plate. }}
             OPTIONAL {{ ?country pred:currency ?currency. }}
-            OPTIONAL {{ ?country pred:pop ?population. }}
+            OPTIONAL {{ ?country pred:population ?population. }}
             OPTIONAL {{ ?country pred:localtime ?localtime. }}
             OPTIONAL {{ ?country pred:area ?area. }}
             OPTIONAL {{ ?country pred:inflation ?inflation. }}
@@ -170,7 +170,7 @@ def landing(request):
 
 
 def country(request):
-    name = request.GET.get('name')
+    id = request.GET.get('id')
 
     query = """
         PREFIX country:<http://edc_2019.org/country/>
@@ -178,31 +178,50 @@ def country(request):
         PREFIX pred: <http://edc_2019.org/pred/>
 
         SELECT  
-        ?country ?plate 
+        ?plate 
         ?flag ?name 
-        ?localtime ?population ?life 
-        ?location ?capital
+        ?localtime ?population 
+        ?location ?life 
         ?inflation ?area
         ?currency ?pib 
+        ?capital ?capitalName ?capitalArea ?capitalPopulation ?capitalImg
         WHERE
         {{
-            ?country rdf:type country:.
-            ?country pred:name '{0}'.
-            OPTIONAL {{ ?country pred:flag ?flag. }}
-            OPTIONAL {{ ?country pred:name ?name. }}
-            OPTIONAL {{ ?country pred:plate ?plate. }}
-            OPTIONAL {{ ?country pred:currency ?currency. }}
-            OPTIONAL {{ ?country pred:pop ?population. }}
-            OPTIONAL {{ ?country pred:area ?area. }}
-            OPTIONAL {{ ?country pred:inflation ?inflation. }}
-            OPTIONAL {{ ?country pred:pib ?pib. }}
-        }}
-    """.format(name)
+            OPTIONAL {{ country:{0} rdf:type country:. }}
+            OPTIONAL {{ country:{0} pred:flag ?flag. }}
+            OPTIONAL {{ country:{0} pred:plate ?plate. }}
+            OPTIONAL {{ country:{0} pred:name ?name. }}
+            OPTIONAL {{ country:{0} pred:localtime ?localtime. }}
+            OPTIONAL {{ country:{0} pred:population ?population. }}
+            OPTIONAL {{ country:{0} pred:location ?location. }}
+            OPTIONAL {{ country:{0} pred:life ?life. }}
+            OPTIONAL {{ country:{0} pred:inflation ?inflation. }}
+            OPTIONAL {{ country:{0} pred:area ?area. }}
+            OPTIONAL {{ country:{0} pred:currency ?currency. }}
+            OPTIONAL {{ country:{0} pred:pib ?pib. }}
+            OPTIONAL {{ country:{0} pred:capital ?capital. }}
+            OPTIONAL {{ 
+                SELECT ?capital 
+                    (SAMPLE(?capitalName) as ?capitalName)
+                    (SAMPLE(?capitalArea) as ?capitalArea) 
+                    (SAMPLE(?capitalPopulation) as ?capitalPopulation) 
+                    (SAMPLE(?capitalImg) as ?capitalImg) {{
+                        OPTIONAL {{ ?capital pred:name ?capitalName. }}
+                        OPTIONAL {{ ?capital pred:area ?capitalArea. }}
+                        OPTIONAL {{ ?capital pred:population ?capitalPopulation.  }}
+                        OPTIONAL {{ ?capital pred:img ?capitalImg. }}
+                }}
+                GROUP BY ?capital
+            }}
+        }} 
+    """.format(id)
 
-    print(query) 
+    print(query)
+
     payload_query = {"query": query}
     res = json.loads(accessor.sparql_select(body=payload_query, repo_name=repo_name))['results']['bindings'][0]
-    print(res, res['country'])
+
+    print(res)
 
     url = 'https://query.wikidata.org/sparql'
     wiki_query_infla = """
@@ -214,7 +233,7 @@ def country(request):
             ps:P1279 ?inflation .
         }}
         order by ?year
-    """.format(res['country']['value'].split('/')[-1])
+    """.format(id)
 
     r = requests.get(url, params = {'format': 'json', 'query': wiki_query_infla})
     data = r.json()['results']['bindings']
@@ -228,16 +247,16 @@ def country(request):
         {{
             wd:{0} p:P1082 ?p .
             ?p pq:P585 ?year ;
-            ps:P1082 ?pop .
+            ps:P1082 ?population .
         }}
         order by ?year
-    """.format(res['country']['value'].split('/')[-1])
+    """.format(id)
 
     r = requests.get(url, params = {'format': 'json', 'query': wiki_query_pop})
     data = r.json()['results']['bindings']
     chartData_pop = {}
     for d in data:
-        chartData_pop[d['year']['value'].split('-')[0]] = str(int(d['pop']['value']) / 1000000)
+        chartData_pop[d['year']['value'].split('-')[0]] = str(int(d['population']['value']) / 1000000)
 
     return render(request, 'country.html',  {
         'tmp': res,
@@ -307,7 +326,7 @@ def populacao(request):
                 SELECT *
                 {
                     ?country rdf:type country:.
-                    ?country pred:pop ?populacao.
+                    ?country pred:population ?populacao.
                     ?country pred:name ?name.
                     ?country pred:life ?life_expectancy
                     OPTIONAL {?country pred:flag ?flag.}
@@ -361,3 +380,5 @@ def parseQuery(query):
     },list(countries)))
 
     return tmp
+
+

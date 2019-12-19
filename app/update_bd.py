@@ -25,7 +25,7 @@ res = accessor.sparql_update(body=payload_query, repo_name=repo_name)
 query = """
 SELECT  ?country (SAMPLE(?plate) as ?plate) 
 (SAMPLE(?flag) as ?flag) (SAMPLE(?name) as ?name) 
-(SAMPLE(?localtime) as ?localtime) (SAMPLE(?pop) as ?pop) (SAMPLE(?life) as ?life) 
+(SAMPLE(?localtime) as ?localtime) (SAMPLE(?population) as ?population) (SAMPLE(?life) as ?life) 
 (SAMPLE(?location) as ?location) (SAMPLE(?capital) as ?capital)
 (SAMPLE(?inflation) as ?inflation) (SAMPLE(?area) as ?area)
 (SAMPLE(?currency) as ?currency) (SAMPLE(?pib) as ?pib) 
@@ -39,6 +39,7 @@ WHERE
     ?country wdt:P421 ?localtmp.
     ?localtmp wdt:P373 ?localtime
   }
+<<<<<<< HEAD
   OPTIONAL { SELECT *
                 WHERE
                 {
@@ -46,6 +47,9 @@ WHERE
                 ?p pq:P585 ?year ;
                     ps:P1082 ?pop .
                 }order by asc(?year) }
+=======
+  OPTIONAL { ?country wdt:P1082 ?population }
+>>>>>>> c50b5e60c943dde676d78a0abafe4e1ebd631f20
   OPTIONAL { ?country wdt:P2250 ?life }
   OPTIONAL { ?country wdt:P242 ?location }
   OPTIONAL { ?country wdt:P1279 ?inflation }
@@ -76,7 +80,7 @@ for d in data:
     name = [i for i in name[2:] if len(i)>2 and i != "the" ]
     for y in name:
         if y[0].isupper():
-            stri += " "+ y
+            stri += y + " "
     d['name']['value']=stri
 
 
@@ -89,6 +93,8 @@ for d in data:
     for pred in d:
         if pred == 'capital':
             string += "country:{0} pred:capital capital:{2}.\n".format(id, pred, d[pred]['value'].split('/')[-1])
+        elif pred == 'pop':
+            string += "country:{0} pred:population '{2}'.\n".format(id, pred, d[pred]['value'])
         else:
             string += "country:{0} pred:{1} '{2}'.\n".format(id, pred, d[pred]['value'])
 
@@ -115,13 +121,13 @@ for d in data:
 # ADICIONAR CAPITAIS
 
 query = """
-SELECT  ?capital (SAMPLE(?img) as ?img) (SAMPLE(?name) as ?name) (SAMPLE(?pop) as ?pop)  (SAMPLE(?area) as ?area)
+SELECT  ?capital (SAMPLE(?img) as ?img) (SAMPLE(?name) as ?name) (SAMPLE(?population) as ?population)  (SAMPLE(?area) as ?area)
 WHERE
 {
   ?capital wdt:P31 wd:Q5119;
     OPTIONAL { ?capital wdt:P18 ?img }
     OPTIONAL { ?capital wdt:P1448 ?name }
-    OPTIONAL { ?capital wdt:P1082 ?pop }
+    OPTIONAL { ?capital wdt:P1082 ?population }
     OPTIONAL { ?capital wdt:P2046 ?area }
 } 
 GROUP BY ?capital

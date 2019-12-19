@@ -14,7 +14,7 @@ accessor = GraphDBApi(client)
 query = """
     SELECT  ?country (SAMPLE(?plate) as ?plate) 
             (SAMPLE(?flag) as ?flag) (SAMPLE(?name) as ?name) 
-            (SAMPLE(?localtime) as ?localtime) (SAMPLE(?pop) as ?pop) (SAMPLE(?life) as ?life) 
+            (SAMPLE(?localtime) as ?localtime) (SAMPLE(?population) as ?population) (SAMPLE(?life) as ?life) 
             (SAMPLE(?location) as ?location) (SAMPLE(?capital) as ?capital)
             (SAMPLE(?inflation) as ?inflation) (SAMPLE(?area) as ?area)
             (SAMPLE(?currency) as ?currency) (SAMPLE(?pib) as ?pib) 
@@ -25,7 +25,7 @@ query = """
                 wdt:P1448 ?name;
         OPTIONAL { ?country wdt:P395 ?plate }
         OPTIONAL { ?country wdt:P421 ?localtime }
-        OPTIONAL { ?country wdt:P1082 ?pop }
+        OPTIONAL { ?country wdt:P1082 ?population }
         OPTIONAL { ?country wdt:P2250 ?life }
         OPTIONAL { ?country wdt:P242 ?location }
         OPTIONAL { ?country wdt:P1279 ?inflation }

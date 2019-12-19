@@ -1,11 +1,11 @@
 async function loadListeners() {
     //table listeners
-    var countries = document.getElementsByClassName("list__country")
+    /* var countries = document.getElementsByClassName("list__country")
     for(var c of countries){
         c.addEventListener('click', (event) => {
             changeURLCountry(event.target.parentElement.children[2].innerHTML)
         })
-    }
+    } */
 
     //sidebar listeners
     var pib = document.getElementById("pib")
@@ -49,11 +49,12 @@ function changeURLCountry(country){
 }
 
 loadListeners()
-const values = ['inflation', 'pib']
+
+const values = [['inflation', ['green', 'red']], ['pib', ['red', 'green']]]
 values.forEach(v => {
-    const data = Array.from(document.getElementsByClassName(v)).filter(i => i.textContent).sort((a,b) => Number(a.textContent) - Number(b.textContent))
+    const data = Array.from(document.getElementsByClassName(v[0])).filter(i => i.textContent).sort((a,b) => Number(a.textContent) - Number(b.textContent))
     const rainbow = new Rainbow()
-    rainbow.setSpectrum('red', 'green');
+    rainbow.setSpectrum(v[1][0], v[1][1]);
     rainbow.setNumberRange(0, data.length - 1);
     
     data.forEach((i, index) => {

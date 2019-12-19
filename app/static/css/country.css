@@ -16,7 +16,6 @@
 
 .country__chart {
     width: 100%;
-    max-width: 100rem;
     background-color: white;
     margin: 10px;
     padding: 10px;
@@ -25,4 +24,35 @@
 
 .country {
     display: flex;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+.country > img {
+    margin-left: auto;
+    height: 20rem;
+}
+
+.country__main {
+    display: flex;
+    flex-direction: column;
+    max-width: 40rem;
+}
+.country__main > span {
+    font-size: 3rem;
+}
+.country__main > img {
+    width: 40rem;
+    height: 20rem;
+}
+
+.country__info {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.country__info > span {
+    font-weight: 700;
+    margin-top: .5rem;
+    font-size: 1.8rem;
 }

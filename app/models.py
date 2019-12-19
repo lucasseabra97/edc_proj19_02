@@ -15,3 +15,8 @@ def dict_type(d, k):
     if k in d:
         return d[k]['type']
     return ''
+
+@register.filter(name='uri_id')
+def uri_id(uri):
+    '''Returns the given wikidata id from a uri.'''
+    return uri.split('/')[-1]
